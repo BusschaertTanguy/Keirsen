@@ -37,7 +37,9 @@ public static class AddProduct
 
         private protected override async Task<Guid> Handle(Command command)
         {
-            var product = new Product(new ProductName(command.Name), new ProductDescription(command.Description));
+            var name = new ProductName(command.Name);
+            var description = new ProductDescription(command.Description);
+            var product = new Product(name, description);
 
             await _productRepository.Add(product);
 

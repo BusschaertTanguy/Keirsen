@@ -41,8 +41,10 @@ public static class ChangeProductInformation
         private protected override async Task Handle(Command command)
         {
             var product = await _productRepository.GetById(command.ProductId);
+            var name = new ProductName(command.Name);
+            var description = new ProductDescription(command.Description);
 
-            product.ChangeInformation(new ProductName(command.Name), new ProductDescription(command.Description));
+            product.ChangeInformation(name, description);
         }
     }
 }
