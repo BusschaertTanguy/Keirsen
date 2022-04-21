@@ -12,12 +12,12 @@ public sealed record ProductDescription
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            throw new DomainException(EmptyMessage);
+            throw new DomainException(nameof(ProductDescription), EmptyMessage);
         }
 
         if (value.Length > MaxLength)
         {
-            throw new DomainException(MaxLengthMessage);
+            throw new DomainException(nameof(ProductDescription), MaxLengthMessage);
         }
 
         Value = value;

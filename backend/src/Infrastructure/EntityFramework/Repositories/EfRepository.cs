@@ -22,7 +22,7 @@ internal abstract class EfRepository<TRootEntity, TState> : IRepository<TRootEnt
 
         if (state == null)
         {
-            throw new DomainException($"{typeof(TRootEntity).Name} not found.");
+            throw new DomainException($"{typeof(TRootEntity).Name}", $"{typeof(TRootEntity).Name} not found.");
         }
 
         return ToEntity(state);
