@@ -1,0 +1,18 @@
+@page
+@model Presentation.Pages.Account.RegisterModel
+
+<h1>Please register</h1>
+
+<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div>
+        <input asp-for="Input.Username"/>
+        <label asp-for="Input.Username"></label>
+    </div>
+    <div>
+        <input asp-for="Input.Password"/>
+        <label asp-for="Input.Password"></label>
+    </div>
+    <div>
+        <button>Register</button>
+    </div>
+</form>

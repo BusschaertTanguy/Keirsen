@@ -26,22 +26,25 @@ public static class AddProduct
         public string Description { get; }
     }
 
-    internal sealed class Handler : CommandHandler<Command, Guid>
+    internal sealed class Handler : IRequestHandler<Command, Guid>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IProductRepository _productRepository;
 
-        public Handler(IUnitOfWork unitOfWork, IProductRepository productRepository) : base(unitOfWork)
+        public Handler(IUnitOfWork unitOfWork, IProductRepository productRepository)
         {
+            _unitOfWork = unitOfWork;
             _productRepository = productRepository;
         }
 
-        private protected override async Task<Guid> Handle(Command command)
+        public async Task<Guid> Handle(Command request, CancellationToken cancellationToken)
         {
-            var name = new ProductName(command.Name);
-            var description = new ProductDescription(command.Description);
+            var name = new ProductName(request.Name);
+            var description = new ProductDescription(request.Description);
             var product = new Product(name, description);
 
             await _productRepository.Add(product);
+            await _unitOfWork.Commit();
 
             return product.Id;
         }

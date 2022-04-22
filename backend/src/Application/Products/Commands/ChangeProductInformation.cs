@@ -29,22 +29,27 @@ public static class ChangeProductInformation
         public string Description { get; }
     }
 
-    internal sealed class Handler : CommandHandler<Command>
+    internal sealed class Handler : IRequestHandler<Command>
     {
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IProductRepository _productRepository;
 
-        public Handler(IUnitOfWork unitOfWork, IProductRepository productRepository) : base(unitOfWork)
+        public Handler(IUnitOfWork unitOfWork, IProductRepository productRepository)
         {
+            _unitOfWork = unitOfWork;
             _productRepository = productRepository;
         }
 
-        private protected override async Task Handle(Command command)
+        public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            var product = await _productRepository.GetById(command.ProductId);
-            var name = new ProductName(command.Name);
-            var description = new ProductDescription(command.Description);
+            var product = await _productRepository.GetById(request.ProductId);
+            var name = new ProductName(request.Name);
+            var description = new ProductDescription(request.Description);
 
             product.ChangeInformation(name, description);
+            await _unitOfWork.Commit();
+
+            return Unit.Value;
         }
     }
 }

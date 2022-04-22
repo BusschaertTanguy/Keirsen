@@ -1,0 +1,21 @@
+@page
+@model Presentation.Pages.Account.LoginModel
+
+<h1>Please log in</h1>
+
+<form method="post">
+    <div>
+        <input asp-for="Input.Username"/>
+        <label asp-for="Input.Username"></label>
+    </div>
+    <div>
+        <input asp-for="Input.Password"/>
+        <label asp-for="Input.Password"></label>
+    </div>
+    <div>
+        <button>Log in</button>
+    </div>
+    <div>
+        <a asp-page="/Account/Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
+    </div>
+</form>
