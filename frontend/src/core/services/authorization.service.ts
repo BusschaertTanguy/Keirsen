@@ -1,6 +1,7 @@
 import {Injectable} from "@angular/core";
-import {from, map, Observable, switchMap} from "rxjs";
+import {from, map, Observable, of} from "rxjs";
 import {User, UserManager} from "oidc-client";
+import {environment} from "../../environments/environment";
 
 @Injectable({
     providedIn: "root"
@@ -9,7 +10,7 @@ export class AuthorizationService {
     private userManager: UserManager | null = null;
 
     public isAuthenticated(): Observable<boolean> {
-        return this.getUser().pipe(map((user: User | null) => !!user));
+        return this.getUser().pipe(map((user: User | null) => !!user))
     }
 
     public getToken(): Observable<string | null> {
@@ -17,40 +18,27 @@ export class AuthorizationService {
     }
 
     public async signIn(): Promise<void> {
-        await this.ensureUserManagerInitialized();
-
         try {
-            await this.userManager?.signinSilent({returnUrl: "http://localhost:4200/"})
+            await this.userManager?.signinSilent({returnUrl: window.location.origin})
         } catch (silentError) {
-            await this.userManager?.signinRedirect({returnUrl: "http://localhost:4200/"})
+            await this.userManager?.signinRedirect({returnUrl: window.location.origin})
         }
     }
 
     public async completeSignIn(url: string): Promise<void> {
-        await this.ensureUserManagerInitialized();
         await this.userManager?.signinCallback(url);
     }
 
     public async signOut(): Promise<void> {
-        await this.ensureUserManagerInitialized();
-        await this.userManager?.signoutRedirect({returnUrl: "http://localhost:4200/"});
+        await this.userManager?.signoutRedirect({returnUrl: window.location.origin});
     }
 
     public async completeSignOut(url: string): Promise<void> {
-        await this.ensureUserManagerInitialized();
         await this.userManager?.signoutCallback(url);
     }
 
-    private getUser(): Observable<User | null> {
-        return from(this.ensureUserManagerInitialized()).pipe(switchMap(() => this.userManager!.getUser()));
-    }
-
-    private async ensureUserManagerInitialized(): Promise<void> {
-        if (this.userManager) {
-            return;
-        }
-
-        const response = await fetch("https://localhost:5001/_configuration/Keirsen");
+    public async load(): Promise<void> {
+        const response = await fetch(`${environment.apiUrl}/_configuration/Keirsen`);
 
         if (!response.ok) {
             throw new Error("Could not load settings for 'Keirsen'");
@@ -66,5 +54,9 @@ export class AuthorizationService {
         this.userManager.events.addUserSignedOut(async () => {
             await this.userManager?.removeUser();
         });
+    }
+
+    private getUser(): Observable<User | null> {
+        return from(this.userManager?.getUser() ?? of(null))
     }
 }

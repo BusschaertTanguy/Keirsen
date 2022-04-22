@@ -2,6 +2,7 @@ using Application.Products.Commands;
 using Application.Products.DTO;
 using Application.Products.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
@@ -10,6 +11,7 @@ namespace Presentation.Controllers;
 [Route("api/products")]
 public class ProductController : ControllerBase
 {
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Guid>> Add([FromServices] IMediator mediator, [FromBody] AddProduct.Command command)
     {
@@ -18,6 +20,7 @@ public class ProductController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id }, null);
     }
 
+    [Authorize]
     [HttpPost("change-information")]
     public async Task<ActionResult<Guid>> ChangeInformation([FromServices] IMediator mediator, [FromBody] ChangeProductInformation.Command command)
     {

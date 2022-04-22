@@ -1,4 +1,4 @@
-import {NgModule} from "@angular/core";
+import {APP_INITIALIZER, NgModule} from "@angular/core";
 import {BrowserModule} from "@angular/platform-browser";
 
 import {AppRoutingModule} from "./app-routing.module";
@@ -7,6 +7,11 @@ import {LoginComponent} from "./authentication/login/login.component";
 import {LogOutComponent} from "./authentication/log-out/log-out.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthorizationInterceptor} from "../core/interceptors/authorization.interceptor";
+import {AuthorizationService} from "../core/services/authorization.service";
+
+function loadAuthorizationService(authorizationService: AuthorizationService): () => Promise<void> {
+    return () => authorizationService.load();
+}
 
 @NgModule({
     declarations: [
@@ -20,7 +25,17 @@ import {AuthorizationInterceptor} from "../core/interceptors/authorization.inter
         AppRoutingModule,
     ],
     providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: AuthorizationInterceptor, multi: true}
+        {
+            provide: APP_INITIALIZER,
+            useFactory: loadAuthorizationService,
+            deps: [AuthorizationService],
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthorizationInterceptor,
+            multi: true
+        }
     ],
     bootstrap: [AppComponent]
 })

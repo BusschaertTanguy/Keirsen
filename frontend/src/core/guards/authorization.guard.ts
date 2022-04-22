@@ -7,10 +7,10 @@ import {Injectable} from "@angular/core";
     providedIn: "root"
 })
 export class AuthorizationGuard implements CanActivate {
-    constructor(private readonly authorizationService: AuthorizationService, private router: Router) {
+    public constructor(private readonly authorizationService: AuthorizationService, private router: Router) {
     }
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         return this.authorizationService.isAuthenticated().pipe(tap((isAuthenticated: boolean) => {
             if (!isAuthenticated) {
                 this.router.navigate(["authentication", "login"]);
