@@ -17,9 +17,7 @@ export class AuthorizationService {
     }
 
     public async signIn(): Promise<void> {
-        if (!this.userManager) {
-            return;
-        }
+        await this.ensureUserManagerInitialized();
 
         try {
             await this.userManager?.signinSilent({returnUrl: "http://localhost:4200/"})
