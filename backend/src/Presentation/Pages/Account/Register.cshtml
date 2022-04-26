@@ -3,16 +3,19 @@
 
 <h1>Please register</h1>
 
-<form asp-route-returnUrl="@Model.ReturnUrl" method="post">
-    <div>
-        <input asp-for="Input.Username"/>
+<form class="form-container" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <div class="form-field">
         <label asp-for="Input.Username"></label>
+        <input asp-for="Input.Username"/>
     </div>
-    <div>
-        <input asp-for="Input.Password"/>
+    <div class="form-field">
         <label asp-for="Input.Password"></label>
+        <input asp-for="Input.Password"/>
     </div>
-    <div>
+    <div class="form-field">
         <button>Register</button>
+    </div>
+    <div class="form-field">
+            <a asp-page="/Account/Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
     </div>
 </form>

@@ -10,6 +10,16 @@
   grid-column: 1 / span 12;
   border-bottom: 1px black solid;
   padding: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+  }
 }
 
 .app-side-menu {
