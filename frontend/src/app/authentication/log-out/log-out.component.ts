@@ -8,7 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class LogOutComponent implements OnInit {
 
-    constructor(private readonly authorizationService: AuthorizationService, private readonly activatedRoute: ActivatedRoute, private readonly router: Router) {
+    public constructor(private readonly authorizationService: AuthorizationService, private readonly activatedRoute: ActivatedRoute, private readonly router: Router) {
     }
 
     public async ngOnInit(): Promise<void> {
