@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, OnDestroy} from "@angular/core";
 import {ProductService} from "../../../../core/services/product.service";
-import {filter, Subject, Subscription, switchMap} from "rxjs";
+import {filter, mergeMap, Subject, Subscription, switchMap} from "rxjs";
 import {AddProductCommand} from "../../../../shared/commands/product.command";
 import {Router} from "@angular/router";
 
@@ -16,7 +16,7 @@ export class AddProductComponent implements OnDestroy {
 
     public constructor(productService: ProductService, router: Router) {
         const subscription = this.addProductCommand.pipe(
-            switchMap((command) => productService.add(command)),
+            mergeMap((command) => productService.add(command)),
             filter((id) => !!id),
             switchMap((id) => router.navigate(["/products", id]))
         ).subscribe();
