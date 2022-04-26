@@ -22,7 +22,7 @@ public class ProductController : ControllerBase
 
     [Authorize]
     [HttpPost("change-information")]
-    public async Task<ActionResult<Guid>> ChangeInformation([FromServices] IMediator mediator, [FromBody] ChangeProductInformation.Command command)
+    public async Task<IActionResult> ChangeInformation([FromServices] IMediator mediator, [FromBody] ChangeProductInformation.Command command)
     {
         await mediator.Send(command);
 

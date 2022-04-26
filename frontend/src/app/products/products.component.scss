@@ -1,0 +1,10 @@
+div {
+  display: flex;
+  flex-direction: column;
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+  }
+}

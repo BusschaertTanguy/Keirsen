@@ -8,6 +8,7 @@ import {LogOutComponent} from "./authentication/log-out/log-out.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {AuthorizationInterceptor} from "../core/interceptors/authorization.interceptor";
 import {AuthorizationService} from "../core/services/authorization.service";
+import {BaseUrlInterceptor} from "../core/interceptors/base-url.interceptor";
 
 function loadAuthorizationService(authorizationService: AuthorizationService): () => Promise<void> {
     return () => authorizationService.load();
@@ -34,6 +35,11 @@ function loadAuthorizationService(authorizationService: AuthorizationService): (
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthorizationInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: BaseUrlInterceptor,
             multi: true
         }
     ],

@@ -14,6 +14,7 @@ builder.Services.AddCors(options => options
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowAnyOrigin()
+        .WithExposedHeaders("location")
     )
 );
 
