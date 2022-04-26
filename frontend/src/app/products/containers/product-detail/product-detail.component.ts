@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component} from "@angular/core";
+import {ChangeDetectionStrategy, Component, OnDestroy} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
 import {ProductService} from "../../../../core/services/product.service";
-import {Observable, switchMap} from "rxjs";
+import {BehaviorSubject, Observable, Subscription, switchMap, tap} from "rxjs";
 import {ProductDetailModel} from "../../../../shared/models/product.model";
 
 @Component({
@@ -10,12 +10,24 @@ import {ProductDetailModel} from "../../../../shared/models/product.model";
     styleUrls: ["product-detail.component.scss"],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnDestroy {
+    private subscription = new Subscription();
+    private product = new BehaviorSubject<ProductDetailModel | null>(null);
+
     public product$: Observable<ProductDetailModel | null>;
 
     public constructor(route: ActivatedRoute, productService: ProductService) {
-        this.product$ = route.params.pipe(
-            switchMap((params) => productService.get(params["id"]))
-        );
+        this.product$ = this.product.asObservable();
+
+        const subscription = route.params.pipe(
+            switchMap((params) => productService.get(params["id"])),
+            tap(product => this.product.next(product))
+        ).subscribe();
+
+        this.subscription.add(subscription);
+    }
+
+    public ngOnDestroy(): void {
+        this.subscription.unsubscribe();
     }
 }
