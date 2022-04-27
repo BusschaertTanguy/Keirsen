@@ -5,10 +5,12 @@
             <button (click)="logout()">Log out</button>
         </div>
     </div>
-    <div class="app-side-menu">
-        <a routerLink="/products">Products</a>
-    </div>
-    <div class="app-main-content">
-        <router-outlet></router-outlet>
+    <div class="app-body">
+        <div class="app-side-menu">
+            <a routerLink="/products">Products</a>
+        </div>
+        <div class="app-main-content">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>

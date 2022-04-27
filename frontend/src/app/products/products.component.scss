@@ -4,7 +4,7 @@ div {
 
   .actions {
     display: flex;
-    flex-direction: row;
-    margin-bottom: 12px;
+    justify-content: start;
+    align-content: center;
   }
 }
