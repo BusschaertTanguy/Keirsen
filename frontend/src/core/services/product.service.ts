@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {AddProductCommand} from "../../shared/commands/product.command";
+import {AddProductCommand, ChangeProductInformationCommand} from "../../shared/commands/product.command";
 import {map, Observable} from "rxjs";
 import {ProductDetailModel, ProductListModel} from "../../shared/models/product.model";
 
@@ -21,6 +21,12 @@ export class ProductService {
                 return endpoint ? endpoint.split("/").reverse()[0] : null;
             })
         );
+    }
+
+    public changeInformation(command: ChangeProductInformationCommand): Observable<void> {
+        const url = `${this.endpoint}/change-information`;
+
+        return this.http.post<void>(url, command);
     }
 
     public getAll(page: { pageIndex: number, pageSize: number }): Observable<ProductListModel[]> {

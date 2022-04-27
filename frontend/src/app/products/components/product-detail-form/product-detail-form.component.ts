@@ -9,24 +9,24 @@ import {FormBuilder, FormGroup} from "@angular/forms";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailFormComponent {
-    public form: FormGroup;
-    public exists: boolean;
-
     @Input()
-    public set product(model: ProductDetailModel | null) {
-        this.exists = !!model;
+    public set product(product: ProductDetailModel | null) {
+        this.exists = !!product;
 
-        if (!model) {
+        if (!product) {
             this.form.reset();
             return;
         }
 
         this.form.setValue({
-            id: model.id,
-            name: model.name,
-            description: model.description
+            id: product.id,
+            name: product.name,
+            description: product.description
         })
     }
+
+    public form: FormGroup;
+    public exists: boolean;
 
     public constructor(private readonly formBuilder: FormBuilder) {
         this.form = formBuilder.group({

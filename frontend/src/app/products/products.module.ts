@@ -10,6 +10,12 @@ import {ProductDetailComponent} from "./containers/product-detail/product-detail
 import {ProductDetailFormComponent} from "./components/product-detail-form/product-detail-form.component";
 import {ProductListComponent} from "./containers/product-list/product-list.component";
 import {ProductListTableComponent} from "./components/product-list-table/product-list-table.component";
+import {
+    ChangeProductInformationComponent
+} from "./containers/change-product-information/change-product-information.component";
+import {
+    ChangeProductInformationFormComponent
+} from "./components/change-product-information-form/change-product-information-form.component";
 
 
 @NgModule({
@@ -20,7 +26,9 @@ import {ProductListTableComponent} from "./components/product-list-table/product
         ProductDetailComponent,
         ProductDetailFormComponent,
         ProductListComponent,
-        ProductListTableComponent
+        ProductListTableComponent,
+        ChangeProductInformationComponent,
+        ChangeProductInformationFormComponent
     ],
     imports: [
         CommonModule,

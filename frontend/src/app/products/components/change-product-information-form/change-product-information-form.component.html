@@ -1,4 +1,8 @@
-<form [formGroup]="form" (ngSubmit)="add()">
+<form [formGroup]="form" (ngSubmit)="save()">
+    <div>
+        <label for="id">ID</label>
+        <input id="id" formControlName="id" readonly/>
+    </div>
     <div>
         <label for="name">Name</label>
         <input id="name" formControlName="name"/>
@@ -8,6 +12,6 @@
         <input id="description" formControlName="description"/>
     </div>
     <div>
-        <button type="submit">Add</button>
+        <button type="submit">Save</button>
     </div>
 </form>

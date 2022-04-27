@@ -21,7 +21,7 @@ export class AddProductFormComponent {
         });
     }
 
-    public addProduct(): void {
+    public add(): void {
         const command: AddProductCommand = {
             name: this.form.get("name")?.value,
             description: this.form.get("description")?.value
