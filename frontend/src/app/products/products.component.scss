@@ -4,7 +4,9 @@ div {
 
   .actions {
     display: flex;
-    justify-content: start;
+    flex-direction: row;
+    justify-content: flex-start;
     align-content: center;
+    gap: 8px;
   }
 }

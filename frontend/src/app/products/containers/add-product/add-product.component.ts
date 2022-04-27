@@ -11,24 +11,24 @@ import {Router} from "@angular/router";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddProductComponent implements OnDestroy {
-    private subscriptions = new Subscription();
-    private addProductCommand = new Subject<AddProductCommand>();
+    private _subscriptions = new Subscription();
+    private _addProduct = new Subject<AddProductCommand>();
 
     public constructor(productService: ProductService, router: Router) {
-        const subscription = this.addProductCommand.pipe(
+        const subscription = this._addProduct.pipe(
             mergeMap((command) => productService.add(command)),
             filter((id) => !!id),
             switchMap((id) => router.navigate(["/products", id]))
         ).subscribe();
 
-        this.subscriptions.add(subscription);
+        this._subscriptions.add(subscription);
     }
 
     public addProduct(command: AddProductCommand): void {
-        this.addProductCommand.next(command);
+        this._addProduct.next(command);
     }
 
     public ngOnDestroy(): void {
-        this.subscriptions.unsubscribe();
+        this._subscriptions.unsubscribe();
     }
 }

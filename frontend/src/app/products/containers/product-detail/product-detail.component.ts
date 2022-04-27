@@ -11,23 +11,23 @@ import {ProductDetailModel} from "../../../../shared/models/product.model";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductDetailComponent implements OnDestroy {
-    private subscription = new Subscription();
-    private product = new BehaviorSubject<ProductDetailModel | null>(null);
+    private _subscription = new Subscription();
+    private _product = new BehaviorSubject<ProductDetailModel | null>(null);
 
     public product$: Observable<ProductDetailModel | null>;
 
     public constructor(route: ActivatedRoute, productService: ProductService) {
-        this.product$ = this.product.asObservable();
+        this.product$ = this._product.asObservable();
 
         const subscription = route.params.pipe(
-            switchMap((params) => productService.get(params["id"])),
-            tap(product => this.product.next(product))
+            switchMap((params) => productService.getById(params["id"])),
+            tap(product => this._product.next(product))
         ).subscribe();
 
-        this.subscription.add(subscription);
+        this._subscription.add(subscription);
     }
 
     public ngOnDestroy(): void {
-        this.subscription.unsubscribe();
+        this._subscription.unsubscribe();
     }
 }

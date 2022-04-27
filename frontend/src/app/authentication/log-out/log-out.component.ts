@@ -17,6 +17,7 @@ export class LogOutComponent implements OnInit {
         switch (action.path) {
             case "logout":
                 await this.authorizationService.signOut();
+                await this.router.navigate([""]);
                 break;
             case "logout-callback" :
                 await this.authorizationService.completeSignOut(window.location.href);

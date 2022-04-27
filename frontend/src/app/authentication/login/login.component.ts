@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
         switch (action.path) {
             case "login":
                 await this.authorizationService.signIn();
+                await this.router.navigate([""]);
                 break;
             case "login-callback" :
                 await this.authorizationService.completeSignIn(window.location.href);

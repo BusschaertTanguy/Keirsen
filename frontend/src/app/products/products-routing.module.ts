@@ -3,11 +3,12 @@ import {RouterModule, Routes} from "@angular/router";
 import {ProductsComponent} from "./products.component";
 import {AddProductComponent} from "./containers/add-product/add-product.component";
 import {ProductDetailComponent} from "./containers/product-detail/product-detail.component";
+import {ProductListComponent} from "./containers/product-list/product-list.component";
 
 const routes: Routes = [
     {
         path: "", component: ProductsComponent, children: [
-            {path: "", redirectTo: "add"},
+            {path: "", component: ProductListComponent},
             {path: "add", component: AddProductComponent},
             {path: ":id", component: ProductDetailComponent},
         ]
