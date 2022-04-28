@@ -4,10 +4,10 @@ import {BrowserModule} from "@angular/platform-browser";
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {BaseUrlInterceptor} from "../core/interceptors/base-url.interceptor";
+import {BaseUrlInterceptor} from "./core/interceptors/base-url.interceptor";
 import {AuthConfig, OAuthModule} from "angular-oauth2-oidc"
-import {AuthorizationService} from "../core/services/authorization.service";
-import {AuthorizationInterceptor} from "../core/interceptors/authorization.interceptor";
+import {AuthorizationService} from "./core/services/authorization.service";
+import {AuthorizationInterceptor} from "./core/interceptors/authorization.interceptor";
 import {environment} from "../environments/environment";
 
 function loadAuthorizationService(authorizationService: AuthorizationService): () => Promise<void> {
