@@ -9,9 +9,9 @@ namespace Presentation.Controllers;
 
 [ApiController]
 [Route("api/products")]
+[Authorize]
 public class ProductController : ControllerBase
 {
-    [Authorize]
     [HttpPost]
     public async Task<ActionResult<Guid>> Add([FromServices] IMediator mediator, [FromBody] AddProduct.Command command)
     {
@@ -19,8 +19,7 @@ public class ProductController : ControllerBase
 
         return CreatedAtAction(nameof(GetById), new { id }, null);
     }
-
-    [Authorize]
+    
     [HttpPost("change-information")]
     public async Task<IActionResult> ChangeInformation([FromServices] IMediator mediator, [FromBody] ChangeProductInformation.Command command)
     {

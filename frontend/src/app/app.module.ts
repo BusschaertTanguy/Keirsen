@@ -3,27 +3,35 @@ import {BrowserModule} from "@angular/platform-browser";
 
 import {AppRoutingModule} from "./app-routing.module";
 import {AppComponent} from "./app.component";
-import {LoginComponent} from "./authentication/login/login.component";
-import {LogOutComponent} from "./authentication/log-out/log-out.component";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {AuthorizationInterceptor} from "../core/interceptors/authorization.interceptor";
-import {AuthorizationService} from "../core/services/authorization.service";
 import {BaseUrlInterceptor} from "../core/interceptors/base-url.interceptor";
+import {AuthConfig, OAuthModule} from "angular-oauth2-oidc"
+import {AuthorizationService} from "../core/services/authorization.service";
+import {AuthorizationInterceptor} from "../core/interceptors/authorization.interceptor";
+import {environment} from "../environments/environment";
 
 function loadAuthorizationService(authorizationService: AuthorizationService): () => Promise<void> {
-    return () => authorizationService.load();
+    const authCodeFlowConfig: AuthConfig = {
+        issuer: environment.apiUrl,
+        redirectUri: window.location.origin,
+        clientId: "Keirsen",
+        responseType: "code",
+        scope: "openid profile PresentationAPI",
+        showDebugInformation: true
+    };
+
+    return () => authorizationService.load(authCodeFlowConfig);
 }
 
 @NgModule({
     declarations: [
-        AppComponent,
-        LoginComponent,
-        LogOutComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
         HttpClientModule,
         AppRoutingModule,
+        OAuthModule.forRoot()
     ],
     providers: [
         {
@@ -34,12 +42,12 @@ function loadAuthorizationService(authorizationService: AuthorizationService): (
         },
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: AuthorizationInterceptor,
+            useClass: BaseUrlInterceptor,
             multi: true
         },
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: BaseUrlInterceptor,
+            useClass: AuthorizationInterceptor,
             multi: true
         }
     ],

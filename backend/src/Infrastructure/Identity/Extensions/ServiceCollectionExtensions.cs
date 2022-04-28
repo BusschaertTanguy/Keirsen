@@ -1,7 +1,6 @@
 using Infrastructure.EntityFramework;
 using Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure.Identity.Extensions;

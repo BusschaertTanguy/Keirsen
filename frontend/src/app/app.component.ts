@@ -10,7 +10,11 @@ export class AppComponent {
     public constructor(private readonly authorizationService: AuthorizationService) {
     }
 
+    public isAuthenticated(): boolean {
+        return this.authorizationService.isAuthenticated();
+    }
+
     public logout(): Promise<void> {
-        return this.authorizationService.signOut();
+        return this.authorizationService.logout();
     }
 }

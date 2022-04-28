@@ -1,6 +1,6 @@
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {AuthorizationService} from "../services/authorization.service";
-import {Observable, switchMap} from "rxjs";
+import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
 
 @Injectable()
@@ -9,16 +9,16 @@ export class AuthorizationInterceptor implements HttpInterceptor {
     }
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return this.authorizationService.getToken().pipe(switchMap(token => {
-            if (!!token) {
-                req = req.clone({
-                    setHeaders: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-            }
+        const token = this.authorizationService.getToken();
 
-            return next.handle(req);
-        }));
+        if (!!token) {
+            req = req.clone({
+                setHeaders: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        }
+
+        return next.handle(req);
     }
 }

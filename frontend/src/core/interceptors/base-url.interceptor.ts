@@ -10,9 +10,13 @@ export class BaseUrlInterceptor implements HttpInterceptor {
 
     public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         if (this.baseUrl) {
-            req = req.clone({
-                url: `${this.baseUrl}/api/${req.url}`
-            });
+            const splitUrl = req.url.split("/");
+
+            if (splitUrl[0] === "api") {
+                req = req.clone({
+                    url: `${this.baseUrl}/${req.url}`
+                });
+            }
         }
         return next.handle(req);
     }

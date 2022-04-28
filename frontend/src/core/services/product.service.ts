@@ -8,7 +8,7 @@ import {ProductDetailModel, ProductListModel} from "../../shared/models/product.
     providedIn: "root"
 })
 export class ProductService {
-    private readonly endpoint = "products";
+    private readonly endpoint = "api/products";
 
     public constructor(private readonly http: HttpClient) {
     }
