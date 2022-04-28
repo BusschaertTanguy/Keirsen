@@ -26,5 +26,7 @@ internal static class ServiceCollectionExtensions
         services.AddTransient<IUnitOfWork, EfUnitOfWork>();
         services.AddTransient<IProductRepository, EfProductRepository>();
         services.AddTransient<IProductQueries, EfProductQueries>();
+        
+        services.AddHostedService<KeirsenDbService>();
     }
 }
