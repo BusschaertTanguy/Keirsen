@@ -1,10 +1,28 @@
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-    </tr>
-    <tr *ngFor="let product of products">
-        <td>{{product.id}}</td>
-        <td><a [routerLink]=[product.id]>{{product.name}}</a></td>
-    </tr>
-</table>
+<div *ngIf="loading; else productsTable">
+    <span>Loading products ... </span>
+</div>
+<div *ngIf="error">
+    <span>{{error}}</span>
+</div>
+<ng-template #productsTable>
+    <div class="container">
+        <div>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                </tr>
+                <tr *ngFor="let product of products">
+                    <td>{{product.id}}</td>
+                    <td><a [routerLink]=[product.id]>{{product.name}}</a></td>
+                </tr>
+            </table>
+        </div>
+        <div class="actions">
+            <button [disabled]="hasPreviousPage()" (click)="previous()">Previous</button>
+            <button (click)="next()">Next</button>
+        </div>
+    </div>
+
+</ng-template>
+

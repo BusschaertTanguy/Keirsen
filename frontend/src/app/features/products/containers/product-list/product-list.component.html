@@ -1,2 +1,8 @@
 <h1>Product List</h1>
-<app-product-list-table [products]="products$ | async"></app-product-list-table>
+<app-product-list-table
+        [loading]="loading$ | async"
+        [currentPage]="currentPage$ | async"
+        [products]="products$ | async"
+        [error]="error$ | async"
+        (pageChanged)="getAllProducts($event)"
+></app-product-list-table>

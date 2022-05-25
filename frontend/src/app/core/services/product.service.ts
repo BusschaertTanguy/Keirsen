@@ -1,8 +1,9 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {AddProductCommand, ChangeProductInformationCommand} from "../../shared/commands/product.command";
 import {map, Observable} from "rxjs";
 import {ProductDetailModel, ProductListModel} from "../../shared/models/product.model";
+import {PageModel, toHttpParams} from "../../shared/models/page.model";
 
 @Injectable({
     providedIn: "root"
@@ -29,8 +30,8 @@ export class ProductService {
         return this.http.post<void>(url, command);
     }
 
-    public getAll(page: { pageIndex: number, pageSize: number }): Observable<ProductListModel[]> {
-        const params = new HttpParams().appendAll(page);
+    public getAll(page: PageModel): Observable<ProductListModel[]> {
+        const params = toHttpParams(page);
 
         return this.http.get<ProductListModel[]>(this.endpoint, {params});
     }

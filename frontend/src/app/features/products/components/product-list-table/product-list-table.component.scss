@@ -6,3 +6,13 @@ table, th, td {
   border: 1px black solid;
   padding: 4px;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .actions {
+    display: flex;
+    justify-content: space-between;
+  }
+}
